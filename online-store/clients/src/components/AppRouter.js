@@ -4,20 +4,21 @@ import {authRoutes, publicRoutes} from '../routes'
 import {SHOP_ROUTE} from '../utils/consts'
 import {Context} from "../index"
 import { useContext} from 'react';
-
+import Home from '../pages/homepage'
 const AppRouter = () => {
     const {user} = useContext(Context)
 
-    console.log(user)
+    console.log({user})
   return (
     <Routes>
-     {user.isAuth && authRoutes.map (({path, Component}) =>
-         <Route key={path} path={path} component={Component} exact/>
-     )}
-     {publicRoutes.map (({path, Component}) =>
-         <Route key={path} path={path} component={Component} exact/>
-     )}
-     <Navigate to={SHOP_ROUTE}/>
+      <Route path="/" element={<Home/>}  exact />
+      {user.isAuth && authRoutes.map (({path, Element}, i) =>
+        <Route key={`${path}_${i}`} path={path} element={<Element/>} />
+      )}
+      {publicRoutes.map (({path, Element, exact}, i) =>
+        <Route key={`${path}_${i}`} path={path} element={<Element/>}/>    
+      )}
+     <Route path='*' element={<Navigate to={SHOP_ROUTE}/>}/>
     </Routes>
   )
 }
