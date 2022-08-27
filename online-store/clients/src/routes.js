@@ -10,7 +10,6 @@ export const authRoutes = [
     {
         path: ADMIN_ROUTE,
         Element: Admin,
-        
     },
     {
        path: BASKET_ROUTE,
